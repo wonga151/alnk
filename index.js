@@ -8,7 +8,7 @@ const { nanoid } = require('nanoid');
 
 require('dotenv').config();
 
-const db = monk(process.env.MONGO_URI);
+const db = monk("mongodb+srv://alnk1:oKoU9fssaTRtVnrs@alnk.zfzqd.mongodb.net/aknklinks?retryWrites=true&w=majority");
 
 const urls = db.get('urls');
 
