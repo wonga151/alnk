@@ -14,3 +14,24 @@ header h1{
   text-align: center;
 
 }
+
+#url-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#link-section {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+
+#loading {
+  margin-top: 15px;
+  align-self: center;
+}
