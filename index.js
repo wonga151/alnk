@@ -9,6 +9,7 @@ const { nanoid } = require('nanoid');
 require('dotenv').config();
 
 const db = monk(process.env.MONGO_URI);
+
 const urls = db.get('urls');
 
 urls.createIndex({ slug: 1 }, { unique: true });
@@ -27,9 +28,21 @@ app.use(express.static('./public'));
 //   })
 // })
 
-// app.get('/url/:id', (req, res) => {
-//   // TODO: get a short url by id
-// })
+app.get('/url/:id', async (req, res, next) => {
+  const { id: slug } = req.params;
+
+  try {
+    const url = await urls.findOne({ slug });
+    if (url) {
+      res.json(url.url);
+    }
+    else {
+      res.json({ message: "No url associated with this slug." })
+    }
+  } catch (error) {
+    next(error)
+  }
+})
 
 app.get('/:id', async (req, res) => {
   const { id: slug } = req.params;
@@ -39,9 +52,9 @@ app.get('/:id', async (req, res) => {
     if (url) {
       res.redirect(url.url);
     }
-    res.redirect(`/?error=${slug} not found`);
+    console.log("Slug: " + slug + " not found")
   } catch (error) {
-    res.redirect(`/?error=Link not found`);
+    console.log(error)
   }
 })
 
@@ -53,6 +66,7 @@ const schema = yup.object().shape({
 
 app.post('/url', async (req, res, next) => {
   let { slug, url } = req.body;
+  console.log(req.body)
 
   try {
     await schema.validate({
@@ -70,14 +84,18 @@ app.post('/url', async (req, res, next) => {
       url
     }
 
+    console.log(newUrl)
+
     const created = await urls.insert(newUrl);
+    console.log("response created")
+    console.log(created)
     res.json(created)
 
   } catch (error) {
     if (error.message.startsWith("E11000")) {
       error.message = "Slug in use."
     }
-    next(error)
+    console.log(error)
   }
 })
 
