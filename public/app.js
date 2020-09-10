@@ -29,6 +29,7 @@ async function onFormSubmitted(event) {
 
     })
     console.log("res json")
+    console.log(response)
     response.json().then(response => {
       console.log("response json after");
       console.log(response);
