@@ -6,6 +6,7 @@
 
 body { 
   font-family: sans-serif;
+  background: #262626;
 
 }
 
@@ -15,11 +16,37 @@ header h1{
 
 }
 
+label {
+  margin-top: 15px;
+  font-size: 20px;
+  
+  color: #2196f3;
+}
+
+input {
+  margin-top: 15px;
+  width: 72%;
+  height: 60px;
+  background: #fff;
+  border: 1px solid #d3d4d7;
+  border-radius: 8px 8px 8px 8px;
+  display: inline-block;
+  margin-right: 20px;
+  margin-bottom: 0;
+  float: left;
+  font-size: 20px;
+  color: #36383b;
+  padding: 0 20px;
+}
+
 #url-form {
   display: flex;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px;
+  background-color: #0b1736;
 }
 
 #link-section {
@@ -34,4 +61,26 @@ header h1{
 #loading {
   margin-top: 15px;
   align-self: center;
+}
+
+.glow {
+  margin-top: 20px;
+  position: relative;
+  display: inline-block;
+  padding: 15px 30px;
+  color: #2196f3;
+  background: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+  font-size: 24px;
+  overflow: hidden;
+  transition: 0.2s;  
+  border: none;
+}
+
+.glow:hover {
+  color: #255784;
+  background: #2196f3;
+  box-shadow: 0 0 10px #2196f3, 0 0 80px #2196f3;
 }

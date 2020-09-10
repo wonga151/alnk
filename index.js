@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -8,7 +9,7 @@ const { nanoid } = require('nanoid');
 
 require('dotenv').config();
 
-const db = monk("mongodb+srv://alnk1:oKoU9fssaTRtVnrs@alnk.zfzqd.mongodb.net/aknklinks?retryWrites=true&w=majority");
+const db = monk(process.env.MONGO_URI);
 
 const urls = db.get('urls');
 
@@ -44,6 +45,7 @@ app.get('/url/:id', async (req, res, next) => {
   }
 })
 
+const notFoundPath = path.join(__dirname, 'public/404.html');
 app.get('/:id', async (req, res) => {
   const { id: slug } = req.params;
 
@@ -53,8 +55,11 @@ app.get('/:id', async (req, res) => {
       res.redirect(url.url);
     }
     console.log("Slug: " + slug + " not found")
+    res.status(404).sendFile(notFoundPath)
   } catch (error) {
     console.log(error)
+    res.status(404).sendFile(notFoundPath)
+
   }
 })
 
@@ -95,7 +100,7 @@ app.post('/url', async (req, res, next) => {
     if (error.message.startsWith("E11000")) {
       error.message = "Slug in use."
     }
-    console.log(error)
+    res.json(error)
   }
 })
 
