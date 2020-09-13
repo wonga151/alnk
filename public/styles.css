@@ -17,13 +17,15 @@ header h1{
 }
 
 label {
+  margin-top: 15px;
   font-size: 20px;
+  
   color: #2196f3;
 }
 
 input {
-  margin: 0px 15px;
-  width: 20%;
+  margin-top: 15px;
+  width: 72%;
   height: 60px;
   background: #fff;
   border: 1px solid #d3d4d7;
@@ -40,7 +42,7 @@ input {
 #url-form {
   display: flex;
   width: 100%;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px;
@@ -62,6 +64,7 @@ input {
 }
 
 .glow {
+  margin-top: 20px;
   position: relative;
   display: inline-block;
   padding: 15px 30px;
@@ -80,19 +83,4 @@ input {
   color: #255784;
   background: #2196f3;
   box-shadow: 0 0 10px #2196f3, 0 0 80px #2196f3;
-}
-
-@media (max-width: 800px) {
-  #url-form {
-    flex-direction: column;
-  }
-
-  .glow {
-    margin-top: 20px;
-  }
-
-  input {
-    margin: 15px ;
-    width: 80%;
-  }
 }
