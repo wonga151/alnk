@@ -1,14 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./variables";
 
-header {
-  // margin: 0;
-  // padding: 0;
-  // background-color: cadetblue;
+.section {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+
+  &.primary {
+    background-color: royalblue;
+  }
 }
+
+.container {
+  display: flex;
+}
+
 body {
+  // display: flex;
+  // justify-content: center;
   margin: 0;
   padding: 0;
   // background-color: cadetblue;
 }
 
+@media (min-width: 1200px) {
+  .container {
+      max-width: 1170px;
+  }
+}

@@ -1,3 +1,64 @@
-img {
+@import "../../scss/variables";
+
+.hero-banner {
+  display: flex;
+  flex-direction: row;
+  align-items: row;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.hero-label-container {
+  display: flex;
   width: 50%;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 1rem;
+}
+
+h1 {
+  color: $orange;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 56px;
+}
+
+p {
+  color: $orange;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 24px;
+}
+
+img {
+  width: 40%;
+  margin: 1rem;
+}
+
+@media (max-width: 809px) {
+  .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      max-width: 1170px;
+  }
+
+  .hero-label-container {
+    width: 100%;
+    align-items: center;
+  }
+
+  img {
+    width: 50%;
+  }
+
+  h1 {
+    font-size: 40px;
+    text-align: center;
+  }
+
+  p {
+    font-size: 20px;
+    text-align: center;
+
+  }
 }

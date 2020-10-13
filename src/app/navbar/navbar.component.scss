@@ -3,19 +3,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@500&display=swap');
 
 @import "../../scss/_mixins";
+@import "../../scss/variables";
 
 .navbar {
   height: 60px;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  border: solid;
-  border-width: 0px 0px 1px 0px;
+  justify-content: space-between;
+  padding: 1rem;
   border-color: black;
   color: white;
   font-weight: 600;
-  padding: 0.5rem;
 }
 
 .nav-items { 
@@ -26,31 +25,32 @@
 
 }
 
-.header {
-  
-  
-  &__toggle {
+.button-hamburger {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
     > span {
-      display: block;
-      width: 26px;
-      height: 2px;
+      display: flex;
+      width: 32px;
+      height: 4px;
       background-color: hsl(233, 36%, 24%);
 
       &:not(:last-child) {
         margin-bottom: 3px;
       }
     }
-  }
 }
-
 
 a {
   text-decoration: none;
-  color: orange;
+  color: $orange;
   font-weight: 500;
-  font-size: 32px;
+  font-size: 40px;
   font-family: 'Sansita Swashed', cursive;
 }
+
+
+
 
 // Visibility
 .hide-on-mobile {

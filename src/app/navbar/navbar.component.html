@@ -1,20 +1,21 @@
-<header class="header">
-  <nav class="navbar">
+<nav class="section">
 
+  <div class="navbar container">
     <a href="#">alnk</a>
 
-    <a id="btnHamburger" href="#" class="header__toggle hide-on-desktop">
+    <a href="#" class="button-hamburger hide-on-desktop">
       <span></span>
       <span></span>
       <span></span>
     </a>
 
     <div class="nav-items hide-on-mobile">
-      <app-nav-item [title]="'Home'"></app-nav-item>
       <app-nav-item [title]="'About'"></app-nav-item>
+      <app-nav-item [title]="'Features'"></app-nav-item>
       <app-nav-item [title]="'Pricing'"></app-nav-item>
       <app-nav-item [title]="'Support'"></app-nav-item>
-    </div>
+      <app-nav-item [title]="'Resources'"></app-nav-item>
 
-  </nav>
-</header>
+    </div>
+  </div>
+</nav>
