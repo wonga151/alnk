@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@500&display=swap');
+
+@import "../../scss/_mixins";
+
+.navbar {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: solid;
+  border-width: 0px 0px 1px 0px;
+  border-color: black;
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem;
+}
+
+.nav-items { 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.header {
+  
+  
+  &__toggle {
+    > span {
+      display: block;
+      width: 26px;
+      height: 2px;
+      background-color: hsl(233, 36%, 24%);
+
+      &:not(:last-child) {
+        margin-bottom: 3px;
+      }
+    }
+  }
+}
+
+
+a {
+  text-decoration: none;
+  color: orange;
+  font-weight: 500;
+  font-size: 32px;
+  font-family: 'Sansita Swashed', cursive;
+}
+
+// Visibility
+.hide-on-mobile {
+  @include breakpoint-down(medium) {
+    display: none;
+  }
+}
+
+.hide-on-desktop {
+  @include breakpoint-up(large) {
+    display: none;
+  }
+}

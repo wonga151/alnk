@@ -1,0 +1,31 @@
+div {
+  margin-right: 32px;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  color: #848D92;
+  font-size: 20px;
+  font-weight: 100;
+  font-family: Arial, Helvetica, sans-serif
+}
+
+a span{
+  display: block;
+  width: 0px;
+  margin-top: 2px;
+  height: 2px;
+}
+
+a:hover {
+  color: #587EE0;
+}
+
+a:hover span {
+  width: 100%;
+  transition: 0.5s ease-in-out;
+  background-color: #587EE0;
+  // color: #587EE0;
+  
+}
