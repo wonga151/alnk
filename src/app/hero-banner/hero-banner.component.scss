@@ -1,4 +1,5 @@
 @import "../../scss/variables";
+@import "../../scss/_mixins";
 
 .hero-banner {
   display: flex;
@@ -13,17 +14,17 @@
   width: 50%;
   flex-direction: column;
   justify-content: center;
-  margin-left: 1rem;
+  margin: 1rem;
 }
 
 h1 {
-  color: $orange;
+  color: $font-color;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 56px;
 }
 
 p {
-  color: $orange;
+  color: $font-color;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 24px;
 }
@@ -33,18 +34,18 @@ img {
   margin: 1rem;
 }
 
-@media (max-width: 809px) {
+@include breakpoint-down(small) {
   .container {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      max-width: 1170px;
   }
 
   .hero-label-container {
     width: 100%;
     align-items: center;
+    margin: 0
   }
 
   img {
@@ -59,6 +60,7 @@ img {
   p {
     font-size: 20px;
     text-align: center;
+    padding: 0px 10px 0px 10px;
 
   }
 }

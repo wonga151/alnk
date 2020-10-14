@@ -1,0 +1,80 @@
+@import "../../scss/variables";
+@import "../../scss/_mixins";
+
+
+
+.section-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+}
+
+.shorten-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+
+
+input {
+  box-sizing: border-box;
+  height: 60px;
+  width: 75%;
+  background: #fff;
+  border: 1px solid #d3d4d7;
+  border-radius: 8px;
+  margin-right: 20px;
+  font-size: 20px;
+  color: #36383b;
+  padding-left: 15px;
+
+  &:focus {
+    outline-color: #2c67fc;
+  }
+}
+
+button {
+  height: 60px;
+  width: 25%;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #2254d1;
+  color: white;
+  font-size: 20px;
+  
+
+  &:focus {
+    border-width: 1;
+    border: white;
+  }
+
+  &:hover {
+    background-color: #2a66ff;
+  }
+}
+
+@include breakpoint-down(medium) {
+  .shorten-container {
+    flex-direction: column;
+  }
+
+  input {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 15px;
+
+  }
+
+  button {
+    width: 100%;
+
+  }
+}

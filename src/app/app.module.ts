@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NavItemComponent } from './nav-item/nav-item.component';
 import { HeroBannerComponent } from './hero-banner/hero-banner.component';
+import { ShortenComponent } from './shorten/shorten.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     NavItemComponent,
-    HeroBannerComponent
+    HeroBannerComponent,
+    ShortenComponent
   ],
   imports: [
     BrowserModule,
