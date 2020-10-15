@@ -19,13 +19,13 @@
 
 h1 {
   color: $font-color;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: $text-font;
   font-size: 56px;
 }
 
 p {
   color: $font-color;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: $text-font;
   font-size: 24px;
 }
 
@@ -37,7 +37,7 @@ img {
 @include breakpoint-down(small) {
   .container {
       display: flex;
-      flex-direction: column;
+      flex-direction: column-reverse;
       justify-content: center;
       align-items: center;
   }

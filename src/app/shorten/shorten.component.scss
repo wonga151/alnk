@@ -1,14 +1,15 @@
 @import "../../scss/variables";
 @import "../../scss/_mixins";
 
-
+$margin: 20px;
 
 .section-container {
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.5rem;
 
 }
 
@@ -17,13 +18,98 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 
+.shorten-button {
+  height: 60px;
+  width: 25%;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #2254d1;
+  color: white;
+  font-size: 20px;
 
+  &:hover {
+    background-color: #2a66ff;
+  }
+}
+
+.link-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  height: 70px;
+  background: #fff;
+  border: 1px solid #d3d4d7;
+
+  &:only-child {
+    border-radius: 8px;
+  }
+
+  &:not(:only-child) {
+    border-radius: 8px 8px 0px 0px;
+  }
+
+  &:not(:nth-of-type(2)) {
+    border-radius: unset;
+  }
+
+  &:last-child {
+    border-radius: 0px 0px 8px 8px;
+  }
+
+
+  .long-link {
+    display: inline-block;
+    font-size: 18px;
+    font-family: $text-font;
+    margin-left: $margin;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 500px;
+
+
+  }
+
+  .short-link-container {
+    display: flex;
+    align-items: center;
+    padding-right: $margin;
+  }
+  
+  .short-link {
+    font-size: 18px;
+    font-family: $text-font;
+    margin-right: $margin;
+    text-decoration: none;
+    color: #0236b9;
+  }
+
+  .copy-button {
+    font-size: 16px;
+    height: 35px;
+    padding: 0 20px 0 20px;
+    border: none;
+    border-radius: 8px;
+    color: #2a5bd7;
+    background-color: #e2e9fd;
+    cursor: pointer;
+
+    &:focus {
+      outline-color: #cedafa;
+    }
+    &:hover {
+      background-color: #cedafa;
+    }
+  }
+}
 
 input {
+  font-family: $text-font;
   box-sizing: border-box;
   height: 60px;
   width: 75%;
@@ -33,33 +119,14 @@ input {
   margin-right: 20px;
   font-size: 20px;
   color: #36383b;
-  padding-left: 15px;
+  padding-left: $margin;
 
   &:focus {
     outline-color: #2c67fc;
   }
 }
 
-button {
-  height: 60px;
-  width: 25%;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  background-color: #2254d1;
-  color: white;
-  font-size: 20px;
-  
 
-  &:focus {
-    border-width: 1;
-    border: white;
-  }
-
-  &:hover {
-    background-color: #2a66ff;
-  }
-}
 
 @include breakpoint-down(medium) {
   .shorten-container {
@@ -69,12 +136,39 @@ button {
   input {
     width: 100%;
     margin-right: 0;
-    margin-bottom: 15px;
+    margin-bottom: $margin;
 
   }
 
-  button {
+  .shorten-button {
     width: 100%;
-
   }
+
+  .link-container {
+    height: unset;
+    flex-direction: column;
+    padding: 20px 0 20px 0;
+
+    .long-link {
+      max-width: 300px;
+    }
+
+    .short-link-container {
+      flex-direction: column;
+      width: 100%;
+      padding-right: 0px;
+  
+      .short-link {
+        padding: 15px 0 15px 0;
+      }
+  
+      .copy-button {
+        width: 85%;
+        padding: unset;
+        margin: unset;
+      }
+    }
+  }
+
+
 }
