@@ -7,6 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { NavItemComponent } from './nav-item/nav-item.component';
 import { HeroBannerComponent } from './hero-banner/hero-banner.component';
 import { ShortenComponent } from './shorten/shorten.component';
+import { ShortLinkBoxComponent } from './short-link-box/short-link-box.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ShortenComponent } from './shorten/shorten.component';
     NavbarComponent,
     NavItemComponent,
     HeroBannerComponent,
-    ShortenComponent
+    ShortenComponent,
+    ShortLinkBoxComponent
   ],
   imports: [
     BrowserModule,

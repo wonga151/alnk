@@ -8,39 +8,11 @@
       <button class="shorten-button" type="button">Shorten</button>
     </div>
 
-    <div class="link-container">
-      <div class="long-link">
-        https://google.comefwafffffffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef
-      </div>
+    <div class="test2">test2</div>
 
-      <div class="short-link-container">
-        <a href="https://google.com" target="_blank" class="short-link">https://alnk.link/ewaefawe</a>
 
-        <button class="copy-button">Copy</button>
-      </div>
-    </div>
-    <div class="link-container">
-      <div class="long-link">
-        https://google.comefwafffffffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef
-      </div>
+    <app-short-link-box *ngFor="let link of links" [link]="link"></app-short-link-box>
 
-      <div class="short-link-container">
-        <a href="#" class="short-link">https://alnk.link/ewaefawe</a>
-
-        <button class="copy-button">Copy</button>
-      </div>
-    </div>
-    <div class="link-container">
-      <div class="long-link">
-        https://google.comefwafffffffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef
-      </div>
-
-      <div class="short-link-container">
-        <a href="#" class="short-link">https://alnk.link/ewaefawe</a>
-
-        <button class="copy-button">Copy</button>
-      </div>
-    </div>
 
   </div>
 </div>

@@ -1,0 +1,119 @@
+// .link-container {
+//   height: 70px;
+//   width: 100%;
+//   background-color: salmon;
+  // margin: 0;
+  // padding: 0;
+// }
+
+@import "../../scss/variables";
+@import "../../scss/_mixins";
+
+
+$margin: 20px;
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  height: 70px;
+  background: #fff;
+  border: 1px solid #d3d4d7;
+  margin: 0;
+  padding: 0;
+ 
+  &:nth-of-type(1) {
+    border-radius: 8px;
+
+    &:not(:last-child) {
+      border-radius: 8px 8px 0px 0px;
+    }
+  }
+
+  &:not(:nth-of-type(1)):not(:last-child){
+    border-radius: unset;
+  }
+
+  &:last-child:not(:nth-of-type(1)) {
+    border-radius: 0px 0px 8px 8px;
+  }
+
+
+  .long-link {
+    display: inline-block;
+    font-size: 18px;
+    font-family: $text-font;
+    margin-left: $margin;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 500px;
+
+
+  }
+
+  .short-link-container {
+    display: flex;
+    align-items: center;
+    padding-right: $margin;
+  }
+  
+  .short-link {
+    font-size: 18px;
+    font-family: $text-font;
+    margin-right: $margin;
+    text-decoration: none;
+    color: #0236b9;
+  }
+
+  .copy-button {
+    font-size: 16px;
+    height: 35px;
+    padding: 0 20px 0 20px;
+    border: none;
+    border-radius: 8px;
+    color: #2a5bd7;
+    background-color: #e2e9fd;
+    cursor: pointer;
+
+    &:focus {
+      outline-color: #cedafa;
+    }
+    &:hover {
+      background-color: #cedafa;
+    }
+  }
+}
+
+
+@include breakpoint-down(medium) {
+
+  :host {
+    height: unset;
+    flex-direction: column;
+    padding: 20px 0 20px 0;
+
+    .long-link {
+      max-width: 300px;
+    }
+
+    .short-link-container {
+      flex-direction: column;
+      width: 100%;
+      padding-right: 0px;
+  
+      .short-link {
+        padding: 15px 0 15px 0;
+      }
+  
+      .copy-button {
+        width: 85%;
+        padding: unset;
+        margin: unset;
+      }
+    }
+  }
+
+
+}
