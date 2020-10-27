@@ -3,13 +3,11 @@
 
     <div class="shorten-container">
       <input placeholder="Shorten your link" />
+      <input placeholder="Slug (Optional)" />
 
 
       <button class="shorten-button" type="button">Shorten</button>
     </div>
-
-    <div class="test2">test2</div>
-
 
     <app-short-link-box *ngFor="let link of links" [link]="link"></app-short-link-box>
 

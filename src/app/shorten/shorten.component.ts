@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './shorten.component.html',
   styleUrls: ['./shorten.component.scss']
 })
+
 export class ShortenComponent implements OnInit {
   links = [
     "https//:google.com/12owefawefawefcmeewfawefawefawefaewf",
