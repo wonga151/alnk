@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LinkServiceService } from './link-service.service';
+import { LinkService } from './link.service';
 
-describe('LinkServiceService', () => {
-  let service: LinkServiceService;
+describe('LinkService', () => {
+  let service: LinkService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(LinkServiceService);
+    service = TestBed.inject(LinkService);
   });
 
   it('should be created', () => {

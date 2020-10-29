@@ -1,11 +1,11 @@
 <div class="long-link">
-  {{link}}
+  {{link.url}}
 </div>
 
 <div class="short-link-container">
-  <a href="https://google.com" target="_blank" class="short-link" title="Shortened link for {{link}}">
-    alnk.link/fewafawef
+  <a href="/{{link.slug}}" target="_blank" class="short-link" title="Shortened link for {{link.url}}">
+    alnk.link/{{link.slug}}
   </a>
 
-  <button class="copy-button">Copy</button>
+  <button (click)="copyText(link.slug)" class="copy-button">Copy</button>
 </div>

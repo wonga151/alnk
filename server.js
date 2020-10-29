@@ -21,7 +21,12 @@ app.use(helmet());
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname + './dist/'));
+
+var distDir = __dirname + "/dist";
+app.use(express.static(distDir));
+app.use(express.static('./public'));
+
+
 
 app.get('/url/:slug', async (req, res, next) => {
   const { slug: slug } = req.params;
@@ -39,7 +44,7 @@ app.get('/url/:slug', async (req, res, next) => {
   }
 })
 
-const notFoundPath = path.join(__dirname, 'public/404.html');
+const notFoundPath = path.join(__dirname, '/public/404.html');
 app.get('/:id', async (req, res) => {
   const { id: slug } = req.params;
 
@@ -59,12 +64,16 @@ app.get('/:id', async (req, res) => {
 
 const schema = yup.object().shape({
   slug: yup.string().trim().matches(/[\w\-]/i),
-  url: yup.string().trim().url().required(),
+  url: yup.string().trim().matches(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/g).required(),
 })
 
 app.post('/url', async (req, res, next) => {
   let { slug, url } = req.body;
   console.log(req.body)
+
+  if (!/^https?:\/\//i.test(url)) {
+    url = 'http://' + url;
+  }
 
   try {
     await schema.validate({
