@@ -2,14 +2,17 @@
   <div class="section-container container">
 
     <div class="shorten-container">
-      <input placeholder="Shorten your link" />
-      <input placeholder="Slug (Optional)" />
+      <input [(ngModel)]="url" name="url" placeholder="Shorten your link" required class="form-control" />
+      <input [(ngModel)]="slug" name="slug" placeholder="Slug (Optional)" />
 
 
-      <button class="shorten-button" type="button">Shorten</button>
+
+      <button (click)="shorten()" class="shorten-button" type="button">Shorten</button>
+
     </div>
 
-    <app-short-link-box *ngFor="let link of links" [link]="link"></app-short-link-box>
+    <app-short-link-box *ngFor="let link of links" [link]="link">
+    </app-short-link-box>
 
 
   </div>

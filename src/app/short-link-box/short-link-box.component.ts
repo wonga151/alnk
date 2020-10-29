@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Link } from '../link'
 
 @Component({
   selector: 'app-short-link-box',
@@ -7,10 +8,20 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ShortLinkBoxComponent implements OnInit {
 
-  @Input() link: string;
+  @Input() link: Link;
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  copyText = (copyText: string) => {
+    var input = document.createElement('textarea');
+    input.innerHTML = "alnk.link/" + copyText;
+    document.body.appendChild(input);
+    input.select();
+    var result = document.execCommand('copy');
+    document.body.removeChild(input);
+    return result;
   }
 
 }
