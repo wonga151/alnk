@@ -32,7 +32,6 @@ export class ShortenComponent implements OnInit {
     }
 
     this.linkService.createLink(newLink).subscribe(newLink => {
-      console.log(newLink)
       this.links.unshift(newLink)
     })
 

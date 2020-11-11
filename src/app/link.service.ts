@@ -25,7 +25,7 @@ export class LinkService {
   createLink(newLink: Link): Observable<Link> {
     return this.http.post<Link>('/url', newLink, httpOptions)
       .pipe(
-        map(res => { console.log(res); return res }),
+        map(res => res),
         catchError(this.handleError)
       );
   }
