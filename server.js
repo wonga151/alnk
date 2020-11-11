@@ -53,8 +53,10 @@ app.get('/:id', async (req, res) => {
     if (url) {
       res.redirect(url.url);
     }
-    console.log("Slug: " + slug + " not found")
-    res.status(404).sendFile(notFoundPath)
+    else {
+      console.log("Slug: " + slug + " not found")
+      res.status(404).sendFile(notFoundPath)
+    }
   } catch (error) {
     console.log(error)
     res.status(404).sendFile(notFoundPath)
@@ -118,7 +120,7 @@ app.use((error, req, res, next) => {
   })
 })
 
-const port = process.env.PORT || 1337;
+const port = process.env.PORT || 3080;
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
 })
