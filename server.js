@@ -52,7 +52,7 @@ app.get('/search/:slug', async (req, res, next) => {
 
     const slugs = await urls.find(
       { slug: regEx },
-      { fields: { _id: 0 } },
+      { _id: 0 }
     )
 
 
@@ -115,19 +115,22 @@ app.post('/url', async (req, res, next) => {
       slug,
       url
     }
-
-    console.log(newUrl)
-
     const created = await urls.insert(newUrl);
-    console.log("response created")
-    console.log(created)
     res.json(created)
 
   } catch (error) {
+    var status
     if (error.message.startsWith("E11000")) {
       error.message = "Slug in use."
+      status = 409;
+      res.status(409)
     }
-    res.json(error)
+    else {
+      status = 400
+      error.message = "Invalid URL"
+      res.status(status)
+    }
+    res.json({ message: error.message, status: status })
   }
 })
 
