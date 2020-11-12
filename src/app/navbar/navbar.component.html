@@ -1,7 +1,24 @@
 <nav class="section">
 
   <div class="navbar container">
-    <a href="#">alnk</a>
+    <div class="logo-items">
+
+      <a href="#" [@logoTransition]="searchFocused ? 'focused' : 'unfocused'">alnk</a>
+
+      <div class="roundButton" [@btnTransition]="searchFocused ? 'focused' : 'unfocused'">
+        <i class="material-icons gray round">west</i>
+      </div>
+
+      <label class="label">
+        <i [@searchTransition]="searchFocused ? 'focused' : 'unfocused'" class="material-icons gray">search</i>
+        <input class="search" placeholder="Search for slugs" (focus)="onSearchFocus()" (blur)="onSearchBlur()"
+          [ngModel]="searchText" (ngModelChange)="onChange($event)">
+      </label>
+
+      <app-search-results *ngIf="searchFocused && searchText !== ''" [links]="links" [searchText]="searchText">
+
+      </app-search-results>
+    </div>
 
     <a href="#" class="button-hamburger hide-on-desktop">
       <span></span>

@@ -5,6 +5,20 @@
 @import "../../scss/_mixins";
 @import "../../scss/variables";
 
+
+$label-size: 50px;
+$transition-speed: .2s;
+$navbar-height: 60px;
+$navbar-vertical-padding: 16px;
+
+.material-icons.gray { 
+  position: absolute;
+  top: 12.5px;
+  left: 12.5px;
+  color: #E4E6EB;
+  border-radius: inherit;
+}
+
 .navbar {
   top: 0;
   position: fixed;
@@ -17,8 +31,19 @@
   border-color: black;
   color: white;
   font-weight: 600;
-  background-color: white;
+  background-color: $darkgray;
 
+}
+
+.roundButton {
+  position: relative;
+  height: $label-size;
+  margin: 0px;
+  border-radius: 50%;
+  cursor: pointer;
+  &:hover {
+    background-color: $medgray;
+  }
 }
 
 .nav-items { 
@@ -29,6 +54,47 @@
 
 }
 
+.logo-items {
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.label {
+  box-sizing: border-box;
+  position: relative;
+  height: $label-size;
+  flex: 1;
+  margin-left: 15px;
+
+
+  .search {
+    box-sizing: border-box;
+    height: $label-size;
+    width: 100%;
+    padding: 9px $navbar-vertical-padding ;
+    border: none;
+    color: #E4E6EB;
+    border-radius: $label-size/2;
+    background-color: $medgray;
+    text-indent: 20px;
+    font-size: 17px;
+    font-weight: normal;
+    transition: all $transition-speed linear;
+    outline: none;
+
+
+    &:focus {
+      text-indent: 0px;
+    }
+  
+  }
+}
+
+
+
 .button-hamburger {
   display: flex;
   flex-direction: column;
@@ -37,7 +103,7 @@
       display: flex;
       width: 32px;
       height: 4px;
-      background-color: hsl(233, 36%, 24%);
+      background-color: $lightgray;
 
       &:not(:last-child) {
         margin-bottom: 3px;
@@ -49,12 +115,10 @@ a {
   text-decoration: none;
   color: $orange;
   font-weight: 500;
-  font-size: 56px;
+  font-size: $label-size;
   font-family: 'Sansita Swashed', cursive;
   margin-left: 15px;
 }
-
-
 
 
 // Visibility
@@ -67,5 +131,27 @@ a {
 .hide-on-desktop {
   @include breakpoint-up(large) {
     display: none;
+  }
+}
+
+@include breakpoint-down(small) {
+  .label {
+    width: $label-size;
+    height: $label-size;
+    border-radius: $label-size/2;
+
+    i {
+      cursor: pointer;
+    }
+    .search {
+      width: $label-size;
+      height: $label-size;
+      border-radius: $label-size/2;
+      cursor: pointer;
+      &:focus {
+        width: 100%;
+        cursor: text;
+      }
+    }
   }
 }
