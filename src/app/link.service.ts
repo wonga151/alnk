@@ -19,6 +19,7 @@ const httpOptions = {
 // @Injectable()
 export class LinkService {
 
+
   constructor(private http: HttpClient) { }
 
 
@@ -47,28 +48,13 @@ export class LinkService {
       // The response body may contain clues as to what went wrong.
       console.error(
         `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `body was: ${error.error.message}`);
+
+
+
     }
     // Return an observable with a user-facing error message.
-    return throwError(
-      'Something bad happened; please try again later.');
+    return throwError(error.error.message);
   }
-
-
-  // createContact(newLink: Link): Promise<Link> {
-  //   return this.http.post('/url', newLink)
-  //     .toPromise()
-  //     .then(response => response.json() as Link)
-  //     .catch(this.handleError);
-  // }
-
-  // private handleError(error: any): Promise<any> {
-  //   let errMsg = (error.message) ? error.message :
-  //     error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-  //   console.error(errMsg); // log to console
-  //   return Promise.reject(errMsg);
-  // }
-
-
 
 }

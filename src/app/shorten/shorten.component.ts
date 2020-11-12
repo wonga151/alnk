@@ -14,6 +14,9 @@ export class ShortenComponent implements OnInit {
   url: string = '';
   slug: string = '';
 
+  errorThrown: boolean = false;
+  errorMessage: string = "";
+
   links: Link[] = []
 
   constructor(private linkService: LinkService) { }
@@ -32,17 +35,25 @@ export class ShortenComponent implements OnInit {
     }
 
     this.linkService.createLink(newLink).subscribe(newLink => {
+      console.log("newlink response")
+      console.log(newLink)
       this.links.unshift(newLink)
-    })
+    },
+      error => {
+        this.errorMessage = error;
+        this.errorThrown = true;
+
+        setTimeout(() => {
+          this.errorMessage = ""
+          this.errorThrown = false;
+        }, 2500)
+      })
 
     this.url = ""
     this.slug = ""
-
-
   }
 
   getLink = () => {
-    console.log("test")
     this.linkService.getLink("you").subscribe(data => {
       console.log("link service response")
       console.log(data)

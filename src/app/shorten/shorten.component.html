@@ -6,10 +6,11 @@
       <input [(ngModel)]="slug" name="slug" placeholder="Slug (Optional)" />
 
 
-
       <button (click)="shorten()" class="shorten-button" type="button">Shorten</button>
 
     </div>
+
+    <div *ngIf="errorThrown" class="error">{{errorMessage}}</div>
 
     <app-short-link-box *ngFor="let link of links" [link]="link">
     </app-short-link-box>

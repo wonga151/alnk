@@ -2,6 +2,7 @@
 @import "../../scss/_mixins";
 
 $margin: 20px;
+$height: 60px;
 
 .section-container {
   width: 100%;
@@ -26,7 +27,7 @@ $margin: 20px;
 }
 
 .shorten-button {
-  height: 60px;
+  height: $height;
   width: 25%;
   border-radius: 8px;
   border: none;
@@ -40,10 +41,23 @@ $margin: 20px;
   }
 }
 
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: $text-font;
+  background-color: rgb(224, 98, 98);
+  color: rgb(150, 35, 35);
+  height: $height;
+  width: 100%;
+  border-radius: 8px;
+
+}
+
 input {
   font-family: $text-font;
   box-sizing: border-box;
-  height: 60px;
+  height: $height;
   background: #fff;
   border: 1px solid #d3d4d7;
   border-radius: 8px;
