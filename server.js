@@ -13,7 +13,7 @@ const db = monk(process.env.MONGO_URI);
 
 const urls = db.get('urls');
 
-urls.createIndex({ slug: 1 }, { unique: true });
+urls.createIndex({ slug: "text" }, { unique: true });
 
 const app = express();
 
@@ -38,6 +38,29 @@ app.get('/url/:slug', async (req, res, next) => {
     }
     else {
       res.json({ message: "No url associated with this slug." })
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.get('/search/:slug', async (req, res, next) => {
+  const { slug: slug } = req.params;
+
+  var regEx = new RegExp(`.*${slug}.*`, 'g')
+  try {
+
+    const slugs = await urls.find(
+      { slug: regEx },
+      { fields: { _id: 0 } },
+    )
+
+
+    if (slugs) {
+      res.json(slugs);
+    }
+    else {
+      res.json({ message: `Error matching: ${slug}.` })
     }
   } catch (error) {
     next(error)
@@ -74,7 +97,7 @@ app.post('/url', async (req, res, next) => {
   console.log(req.body)
 
   if (!/^https?:\/\//i.test(url)) {
-    url = 'http://' + url;
+    url = 'https://' + url;
   }
 
   try {

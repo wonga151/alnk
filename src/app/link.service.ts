@@ -34,6 +34,10 @@ export class LinkService {
     return this.http.get('/url/' + linkId)
   }
 
+  searchBySlug(slug: string) {
+    return this.http.get<Link[]>('/search/' + slug)
+  }
+
   handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

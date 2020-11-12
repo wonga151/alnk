@@ -8,7 +8,7 @@
   align-items: center;
 
   &.primary {
-    background-color:  #05236e;
+    background-color:  $lightgray;
   }
 }
 
@@ -17,9 +17,9 @@
 }
 
 body {
-  margin-top: 60px;
-  margin: 60px 0px 0px 0px;
-  padding: 0;
+  margin: 70px 0px 0px 0px;
+  background-color: $darkgray;
+
 }
 
 @media (min-width: 1200px) {
