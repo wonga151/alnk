@@ -11,8 +11,9 @@
 
       <label class="label">
         <i [@searchTransition]="searchFocused ? 'focused' : 'unfocused'" class="material-icons gray">search</i>
-        <input class="search" placeholder="Search for slugs" (focus)="onSearchFocus()" (blur)="onSearchBlur()"
-          [ngModel]="searchText" (ngModelChange)="onChange($event)">
+        <input class="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+          placeholder="Search for slugs" (focus)="onSearchFocus()" (blur)="onSearchBlur()" [ngModel]="searchText"
+          (ngModelChange)="onChange($event)">
       </label>
 
       <app-search-results *ngIf="searchFocused && searchText !== ''" [links]="links" [searchText]="searchText">
