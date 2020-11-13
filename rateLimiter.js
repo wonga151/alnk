@@ -37,10 +37,7 @@ const getRequestCount = (req, res, next) => {
         let data = JSON.parse(record);
         let windowStartTimestamp = moment()
           .subtract(WINDOW_SIZE_IN_HOURS, 'hours')
-        // .unix();
-
-        console.log("timestamp")
-        console.log(windowStartTimestamp)
+          .unix();
         let requestsWithinWindow = data.filter(entry => {
           return entry.requestTimeStamp > windowStartTimestamp;
         });

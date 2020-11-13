@@ -1,10 +1,10 @@
 const redis = require('redis')
-// const redisClient = redis.createClient(process.env.REDIS_URL);
-const redisClient = redis.createClient()
+const redisClient = redis.createClient(process.env.REDIS_URL);
+// const redisClient = redis.createClient()
 
-redisClient.flushall(function (err, succeeded) {
-  console.log(succeeded); // will be true if successfull
-});
+// redisClient.flushall(function (err, succeeded) {
+//   console.log(succeeded); // will be true if successfull
+// });
 
 redisClient.on('connect', () => {
   console.log("Client connected to Redis...")
