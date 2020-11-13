@@ -23,7 +23,7 @@ const WINDOW_SIZE_IN_HOURS = require('./rateLimiter.js').WINDOW_SIZE_IN_HOURS
 
 const urls = db.get('urls');
 
-const expireAfterSeconds = WINDOW_SIZE_IN_HOURS * 360;
+const expireAfterSeconds = WINDOW_SIZE_IN_HOURS * 60 * 60;
 urls.createIndex({ createdAt: 1 }, { expireAfterSeconds: expireAfterSeconds });
 urls.createIndex({ slug: 1 }, { unique: true });
 
