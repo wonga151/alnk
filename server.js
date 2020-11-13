@@ -1,22 +1,35 @@
 const path = require('path')
 const express = require('express');
+
+var moment = require('moment')
+var redis = require('redis')
 const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const yup = require('yup');
 const monk = require('monk');
+const compression = require('compression')
 const { nanoid } = require('nanoid');
 
 require('dotenv').config();
 
 const db = monk(process.env.MONGO_URI);
 
+const redisClient = require('./initRedis.js')
+
+const getRequestCount = require('./rateLimiter.js').getRequestCount
+const WINDOW_LOG_INTERVAL_IN_HOURS = require('./rateLimiter.js').WINDOW_LOG_INTERVAL_IN_HOURS
+const WINDOW_SIZE_IN_HOURS = require('./rateLimiter.js').WINDOW_SIZE_IN_HOURS
+
 const urls = db.get('urls');
 
-urls.createIndex({ slug: "text" }, { unique: true });
+const expireAfterSeconds = WINDOW_SIZE_IN_HOURS * 360;
+urls.createIndex({ createdAt: 1 }, { expireAfterSeconds: expireAfterSeconds });
+urls.createIndex({ slug: 1 }, { unique: true });
 
 const app = express();
 
+app.use(compression())
 app.use(helmet());
 app.use(morgan('tiny'));
 app.use(cors());
@@ -47,14 +60,12 @@ app.get('/url/:slug', async (req, res, next) => {
 app.get('/search/:slug', async (req, res, next) => {
   const { slug: slug } = req.params;
 
-  var regEx = new RegExp(`.*${slug}.*`, 'g')
+  var regEx = new RegExp(`.*${slug}.*`, 'i')
   try {
-
     const slugs = await urls.find(
       { slug: regEx },
       { _id: 0 }
     )
-
 
     if (slugs) {
       res.json(slugs);
@@ -92,7 +103,8 @@ const schema = yup.object().shape({
   url: yup.string().trim().matches(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/g).required(),
 })
 
-app.post('/url', async (req, res, next) => {
+
+app.post('/url', getRequestCount, async (req, res, next) => {
   let { slug, url } = req.body;
   console.log(req.body)
 
@@ -101,36 +113,58 @@ app.post('/url', async (req, res, next) => {
   }
 
   try {
-    await schema.validate({
-      slug,
-      url
-    })
+    await schema.validate({ slug, url })
 
     if (!slug) {
       slug = nanoid(5);
     }
 
-    slug = slug.toLowerCase();
-    const newUrl = {
-      slug,
-      url
-    }
-    const created = await urls.insert(newUrl);
-    res.json(created)
+    const newUrl = { slug, url, createdAt: new Date() }
 
-  } catch (error) {
-    var status
-    if (error.message.startsWith("E11000")) {
-      error.message = "Slug in use."
-      status = 409;
-      res.status(409)
-    }
-    else {
-      status = 400
-      error.message = "Invalid URL"
-      res.status(status)
-    }
-    res.json({ message: error.message, status: status })
+    urls.insert(newUrl)
+      .then(response => {
+        const currentRequestTime = moment()
+        let data = res.locals.data;
+
+        let lastRequestLog = data[data.length - 1];
+        let potentialCurrentWindowIntervalStartTimeStamp = currentRequestTime
+          .subtract(WINDOW_LOG_INTERVAL_IN_HOURS, 'hours')
+          .unix();
+
+        //  if interval has not passed since last request log, increment counter
+        if (lastRequestLog.requestTimeStamp > potentialCurrentWindowIntervalStartTimeStamp) {
+          lastRequestLog.requestCount++;
+          data[data.length - 1] = lastRequestLog;
+        } else {
+          //  if interval has passed, log new entry for current user and timestamp
+          data.push({
+            requestTimeStamp: currentRequestTime.unix(),
+            requestCount: 1
+          });
+        }
+        console.log(data)
+        redisClient.set(req.ip, JSON.stringify(data), "EX", expireAfterSeconds, redis.print);
+        res.json(response)
+      })
+      .catch(error => {
+        let status;
+        if (error.message.startsWith("E11000")) {
+          error.message = "Slug in use."
+          status = 409;
+          res.status(409)
+        }
+        else {
+          status = 400
+          error.message = "Invalid URL"
+          res.status(status)
+        }
+        console.log(error.message)
+        res.json({ message: error.message, status: status })
+      })
+  }
+  catch (error) {
+    res.status(400)
+    res.json({ message: "Invalid URL", status: 400 })
   }
 })
 
