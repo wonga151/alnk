@@ -1,9 +1,12 @@
+const { promisify } = require('util');
+
 const redisClient = require('./initRedis')
+const ttl = promisify(redisClient.ttl).bind(redisClient);
 
 var moment = require('moment')
 
 const WINDOW_SIZE_IN_HOURS = 24;
-const MAX_WINDOW_REQUEST_COUNT = 5;
+const MAX_WINDOW_REQUEST_COUNT = 3;
 const WINDOW_LOG_INTERVAL_IN_HOURS = 1;
 
 const getRequestCount = (req, res, next) => {
@@ -12,10 +15,12 @@ const getRequestCount = (req, res, next) => {
       next(Error('Redis client does not exist!'));
     }
     // fetch records of current user using IP address, returns null when no record is found
-    redisClient.get(req.ip, function (err, record) {
+    redisClient.get(req.ip, async function (err, record) {
       if (err) throw err;
       const currentRequestTime = moment();
+      console.log("----Current record----")
       console.log(record);
+      console.log("----------------------")
 
       //  if no record is found , create a new record for user and store to redis
       if (record == null) {
@@ -37,7 +42,7 @@ const getRequestCount = (req, res, next) => {
         let data = JSON.parse(record);
         let windowStartTimestamp = moment()
           .subtract(WINDOW_SIZE_IN_HOURS, 'hours')
-        // .unix();
+          .unix();
 
         console.log("timestamp")
         console.log(windowStartTimestamp)
@@ -54,10 +59,12 @@ const getRequestCount = (req, res, next) => {
         // if number of requests made is greater than or equal to the desired maximum, return error
         if (totalWindowRequestsCount >= MAX_WINDOW_REQUEST_COUNT) {
           console.log("Too many requests")
+          const remainingTime = await ttl(req.ip);
+          const remainingTimeHrs = (remainingTime / 3600).toFixed(2)
 
           res.status(429)
           res.json({
-            message: `You exceeded ${MAX_WINDOW_REQUEST_COUNT} requests / ${WINDOW_SIZE_IN_HOURS} hrs. Try again later.`,
+            message: `You exceeded ${MAX_WINDOW_REQUEST_COUNT} requests in ${WINDOW_SIZE_IN_HOURS} hrs. Try again in ${remainingTimeHrs} hrs.`,
             status: 429
           });
         }

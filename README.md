@@ -2,9 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.6.
 
-## Development server
+## Development on local machine
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files. The app contains a proxy setting in the `angular.json` so that any api call to `/` is routed to `http://localhost:3080`.
+
+Run `npm run dev` to run nodemon backend server on `http://localhost:3080`.
 
 ## Code scaffolding
 

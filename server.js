@@ -104,7 +104,7 @@ const schema = yup.object().shape({
 })
 
 
-app.post('/url', /**getRequestCount,**/ async (req, res, next) => {
+app.post('/url', getRequestCount, async (req, res, next) => {
   let { slug, url } = req.body;
   console.log(req.body)
 
@@ -124,27 +124,27 @@ app.post('/url', /**getRequestCount,**/ async (req, res, next) => {
     urls.insert(newUrl)
       .then(response => {
 
-        // const currentRequestTime = moment()
-        // let data = res.locals.data;
+        const currentRequestTime = moment()
+        let data = res.locals.data;
 
-        // let lastRequestLog = data[data.length - 1];
-        // let potentialCurrentWindowIntervalStartTimeStamp = currentRequestTime
-        //   .subtract(WINDOW_LOG_INTERVAL_IN_HOURS, 'hours')
-        //   .unix();
+        let lastRequestLog = data[data.length - 1];
+        let potentialCurrentWindowIntervalStartTimeStamp = currentRequestTime
+          .subtract(WINDOW_LOG_INTERVAL_IN_HOURS, 'hours')
+          .unix();
 
-        // //  if interval has not passed since last request log, increment counter
-        // if (lastRequestLog.requestTimeStamp > potentialCurrentWindowIntervalStartTimeStamp) {
-        //   lastRequestLog.requestCount++;
-        //   data[data.length - 1] = lastRequestLog;
-        // } else {
-        //   //  if interval has passed, log new entry for current user and timestamp
-        //   data.push({
-        //     requestTimeStamp: currentRequestTime.unix(),
-        //     requestCount: 1
-        //   });
-        // }
-        // console.log(data)
-        // redisClient.set(req.ip, JSON.stringify(data), "EX", expireAfterSeconds, redis.print);
+        //  if interval has not passed since last request log, increment counter
+        if (lastRequestLog.requestTimeStamp > potentialCurrentWindowIntervalStartTimeStamp) {
+          lastRequestLog.requestCount++;
+          data[data.length - 1] = lastRequestLog;
+        } else {
+          //  if interval has passed, log new entry for current user and timestamp
+          data.push({
+            requestTimeStamp: currentRequestTime.unix(),
+            requestCount: 1
+          });
+        }
+        console.log(data)
+        redisClient.set(req.ip, JSON.stringify(data), "EX", expireAfterSeconds, redis.print);
         res.json(response)
       })
       .catch(error => {
