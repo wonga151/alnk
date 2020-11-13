@@ -35,8 +35,7 @@ export class ShortenComponent implements OnInit {
     }
 
     this.linkService.createLink(newLink).subscribe(newLink => {
-      console.log("newlink response")
-      console.log(newLink)
+
       this.links.unshift(newLink)
     },
       error => {
@@ -46,18 +45,12 @@ export class ShortenComponent implements OnInit {
         setTimeout(() => {
           this.errorMessage = ""
           this.errorThrown = false;
-        }, 2500)
+        }, 5500)
       })
 
     this.url = ""
     this.slug = ""
   }
 
-  getLink = () => {
-    this.linkService.getLink("you").subscribe(data => {
-      console.log("link service response")
-      console.log(data)
-    })
-  }
 
 }
