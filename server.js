@@ -144,7 +144,17 @@ app.post('/url', getRequestCount, async (req, res, next) => {
           });
         }
         console.log(data)
-        redisClient.set(req.ip, JSON.stringify(data), "EX", expireAfterSeconds, redis.print);
+
+
+        var ipAddr = req.headers["x-forwarded-for"];
+        if (ipAddr) {
+          var list = ipAddr.split(",");
+          ipAddr = list[list.length - 1];
+        } else {
+          ipAddr = req.connection.remoteAddress;
+        }
+
+        redisClient.set(ipAddr, JSON.stringify(data), "EX", expireAfterSeconds, redis.print);
         res.json(response)
       })
       .catch(error => {

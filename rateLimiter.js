@@ -6,7 +6,7 @@ const ttl = promisify(redisClient.ttl).bind(redisClient);
 var moment = require('moment')
 
 const WINDOW_SIZE_IN_HOURS = 24;
-const MAX_WINDOW_REQUEST_COUNT = 3;
+const MAX_WINDOW_REQUEST_COUNT = 5;
 const WINDOW_LOG_INTERVAL_IN_HOURS = 1;
 
 const getRequestCount = (req, res, next) => {
@@ -14,8 +14,17 @@ const getRequestCount = (req, res, next) => {
     if (!redisClient) {
       next(Error('Redis client does not exist!'));
     }
+
+    var ipAddr = req.headers["x-forwarded-for"];
+    if (ipAddr) {
+      var list = ipAddr.split(",");
+      ipAddr = list[list.length - 1];
+    } else {
+      ipAddr = req.connection.remoteAddress;
+    }
+
     // fetch records of current user using IP address, returns null when no record is found
-    redisClient.get(req.ip, async function (err, record) {
+    redisClient.get(ipAddr, async function (err, record) {
       if (err) throw err;
       const currentRequestTime = moment();
       console.log("----Current record----")
@@ -30,7 +39,7 @@ const getRequestCount = (req, res, next) => {
           requestCount: 0
         };
         newRecord.push(requestLog);
-        redisClient.set(req.ip, JSON.stringify(newRecord));
+        redisClient.set(ipAddr, JSON.stringify(newRecord));
 
         res.locals.data = newRecord;
         console.log("No records found, create new record")
@@ -59,7 +68,7 @@ const getRequestCount = (req, res, next) => {
         // if number of requests made is greater than or equal to the desired maximum, return error
         if (totalWindowRequestsCount >= MAX_WINDOW_REQUEST_COUNT) {
           console.log("Too many requests")
-          const remainingTime = await ttl(req.ip);
+          const remainingTime = await ttl(ipAddr);
           const remainingTimeHrs = (remainingTime / 3600).toFixed(2)
 
           res.status(429)
