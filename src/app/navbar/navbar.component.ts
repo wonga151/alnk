@@ -78,6 +78,7 @@ export class NavbarComponent implements OnInit {
 
   searchText: string = "";
   searchTextChanged: Subject<string> = new Subject<string>();
+  transitionSpeed: string = transitionSpeed;
 
   links: Link[] = [];
 
@@ -86,7 +87,6 @@ export class NavbarComponent implements OnInit {
       debounceTime(100),
       distinctUntilChanged())
       .subscribe(text => {
-        this.searchText = text
         if (text !== "") {
           this.linkService.searchBySlug(text).subscribe((data: Link[]) => {
             this.links = [...data]
@@ -120,6 +120,7 @@ export class NavbarComponent implements OnInit {
   }
 
   onChange(text: string) {
+    this.searchText = text
     this.searchTextChanged.next(text);
 
   }

@@ -16,9 +16,11 @@
           (ngModelChange)="onChange($event)">
       </label>
 
-      <app-search-results *ngIf="searchFocused && searchText !== ''" [links]="links" [searchText]="searchText">
+      <app-search-results *ngIf="searchFocused && searchText !== ''" [links]="links" [searchText]="searchText"
+        [transitionSpeed]="transitionSpeed">
 
       </app-search-results>
+
     </div>
 
     <a href="#" class="button-hamburger hide-on-desktop">
