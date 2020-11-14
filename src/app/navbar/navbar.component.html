@@ -5,7 +5,7 @@
 
       <a href="#" [@logoTransition]="searchFocused ? 'focused' : 'unfocused'">alnk</a>
 
-      <div class="roundButton" [@btnTransition]="searchFocused ? 'focused' : 'unfocused'">
+      <div (click)="onSearchBlur()" class="roundButton" [@btnTransition]="searchFocused ? 'focused' : 'unfocused'">
         <i class="material-icons gray round">west</i>
       </div>
 
