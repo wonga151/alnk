@@ -16,9 +16,10 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-// @Injectable()
+
 export class LinkService {
 
+  searchedLinks: Link[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -36,7 +37,9 @@ export class LinkService {
   }
 
   searchBySlug(slug: string) {
-    return this.http.get<Link[]>('/search/' + slug)
+    this.http.get<Link[]>('/search/' + slug).subscribe((data: Link[]) => {
+      this.searchedLinks = [...data]
+    })
   }
 
   handleError(error: HttpErrorResponse) {
@@ -49,9 +52,6 @@ export class LinkService {
       console.error(
         `Backend returned code ${error.status}, ` +
         `body was: ${error.error.message}`);
-
-
-
     }
     // Return an observable with a user-facing error message.
     return throwError(error.error.message);

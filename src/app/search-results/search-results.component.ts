@@ -1,47 +1,31 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, HostBinding, OnChanges } from '@angular/core';
+
 import { Link } from '../link'
 
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
-
-var transitionSpeed = "";
 
 @Component({
   selector: 'app-search-results',
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss'],
-  // animations: [
-  //   trigger('searchTransition', [
-  //     state('focused', style({
-  //       opacity: 0,
-  //       left: 0,
-  //     })),
-  //     state('unfocused', style({
-  //       opacity: 1,
-  //       left: 12.5,
-  //     })),
-  //     transition('focused <=> unfocused', [
-  //       animate(transitionSpeed)
-  //     ]),
-  //   ]),
-  // ],
+
 })
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent implements OnInit, OnChanges {
 
-  @Input() links: Link[];
   @Input() searchText: string;
-  @Input() transitionSpeed: string;
+  @Input() links: Link[];
 
+  @HostBinding('style.height') height = 'auto';
 
   constructor() { }
 
   ngOnInit(): void {
-    transitionSpeed = this.transitionSpeed
+  }
+
+  ngOnChanges() {
+    var newHeight = 56 + (this.links.length * 56)
+
+    this.height = newHeight + "px"
+
   }
 
 }

@@ -1,29 +1,32 @@
 
 a {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-decoration: none;
   color: #848D92;
   padding: 5px;
   font-weight: 100;
   margin-right: 1rem;
-  font-family: Arial, Helvetica, sans-serif
+  font-family: Arial, Helvetica, sans-serif;
+
+  span{
+    display: block;
+    width: 0px;
+    margin-top: 2px;
+    height: 2px;
+  
+    transition: all .2s ease-in-out;
+  
+  }
 }
 
-a span{
-  display: block;
-  width: 0px;
-  margin-top: 2px;
-  height: 2px;
-}
 
 a:hover {
   color: #587EE0;
-}
 
-a:hover span {
-  width: 100%;
-  transition: 0.5s ease-in-out;
-  background-color: #587EE0;
-  // color: #587EE0;
-  
+  span {
+    width: 100%;
+    background-color: #587EE0;
+  }
 }

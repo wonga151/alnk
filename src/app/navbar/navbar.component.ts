@@ -10,8 +10,6 @@ import {
 import { Subject } from 'rxjs/';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 
-import { Link } from '../link'
-
 import { LinkService } from '../link.service';
 
 
@@ -80,21 +78,13 @@ export class NavbarComponent implements OnInit {
   searchTextChanged: Subject<string> = new Subject<string>();
   transitionSpeed: string = transitionSpeed;
 
-  links: Link[] = [];
 
-  constructor(private linkService: LinkService) {
+  constructor(public linkService: LinkService) {
     this.searchTextChanged.pipe(
       debounceTime(100),
       distinctUntilChanged())
       .subscribe(text => {
-        if (text !== "") {
-          this.linkService.searchBySlug(text).subscribe((data: Link[]) => {
-            this.links = [...data]
-          })
-        }
-        else {
-          this.links = []
-        }
+        this.search(text)
       });
   }
 
@@ -108,11 +98,7 @@ export class NavbarComponent implements OnInit {
   onSearchFocus = () => {
     this.searchFocused = true;
 
-    if (this.searchText !== "") {
-      this.linkService.searchBySlug(this.searchText).subscribe((data: Link[]) => {
-        this.links = [...data]
-      })
-    }
+    this.search(this.searchText)
   }
 
   onSearchBlur = () => {
@@ -122,6 +108,15 @@ export class NavbarComponent implements OnInit {
   onChange(text: string) {
     this.searchText = text
     this.searchTextChanged.next(text);
+  }
+
+  search = (searchString: string) => {
+    if (searchString.trim() !== "") {
+      this.linkService.searchBySlug(searchString)
+    }
+    else {
+      this.linkService.searchedLinks = []
+    }
 
   }
 

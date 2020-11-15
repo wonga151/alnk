@@ -7,20 +7,21 @@
   position: absolute;
   top: $navbar-height + $navbar-vertical-padding;
   left: 30px;
-  padding: 5px 0px;
   border-radius: 5px;
   background-color: $darkgray;
   box-shadow: 0px 10px 16px 5px rgba(0,0,0,0.2);
-  transition: width 0.2s linear;
+
+
+  transition: all 0.2s linear;
+  overflow: hidden;
 
 }
-
-
 
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  
 }
 
 li {
