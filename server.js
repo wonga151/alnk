@@ -154,7 +154,7 @@ app.post('/url', getRequestCount, async (req, res, next) => {
           ipAddr = req.connection.remoteAddress;
         }
 
-        redisClient.set(ipAddr, JSON.stringify(data), "EX", expireAfterSeconds, redis.print);
+        redisClient.set(ipAddr, JSON.stringify(data), "KEEPTTL");
         res.json(response)
       })
       .catch(error => {

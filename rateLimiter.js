@@ -39,7 +39,7 @@ const getRequestCount = (req, res, next) => {
           requestCount: 0
         };
         newRecord.push(requestLog);
-        redisClient.set(ipAddr, JSON.stringify(newRecord));
+        redisClient.set(ipAddr, JSON.stringify(newRecord), "EX", WINDOW_SIZE_IN_HOURS * 60 * 60);
 
         res.locals.data = newRecord;
         console.log("No records found, create new record")
